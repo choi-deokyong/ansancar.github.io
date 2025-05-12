@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align content to the top */
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    max-width: 900px;
+    width: 100%;
+    margin-bottom: 40px; /* Add some space at the bottom */
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+h2 {
+    color: #34495e;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fbfbfb;
+    border: 1px solid #eee;
+}
+
+.calendar-section {
+    text-align: center;
+}
+
+.calendar-section iframe {
+    max-width: 100%;
+    height: 500px; /* Adjusted height for better display */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+.calendar-section p {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 15px;
+}
+
+.reservation-form .form-group {
+    margin-bottom: 25px;
+}
+
+.reservation-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 1.1em;
+}
+
+.reservation-form input[type="text"],
+.reservation-form input[type="number"],
+.reservation-form input[type="datetime-local"],
+.reservation-form select {
+    width: calc(100% - 20px);
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+
+.reservation-form input[type="text"]:focus,
+.reservation-form input[type="number"]:focus,
+.reservation-form input[type="datetime-local"]:focus,
+.reservation-form select:focus {
+    border-color: #6fa8dc;
+    box-shadow: 0 0 0 3px rgba(111, 168, 220, 0.2);
+    outline: none;
+}
+
+.agreement-section {
+    margin-top: 40px;
+    border-top: 2px dashed #e0e0e0;
+    padding-top: 30px;
+    background-color: #fff; /* Remove background from section to let container background show */
+    border: none; /* Remove border from section as well */
+}
+
+.agreement-section h2 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-top: 0;
+    font-size: 1.6em;
+}
+
+.agreement-content {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    line-height: 1.8;
+    color: #444;
+    font-size: 0.95em;
+}
+
+.agreement-content h3 {
+    color: #2980b9;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.agreement-content ul {
+    list-style-type: disc;
+    margin-left: 25px;
+    padding-left: 0;
+}
+
+.agreement-content li {
+    margin-bottom: 5px;
+}
+
+.agreement-content p {
+    margin-bottom: 10px;
+}
+
+.agreement-checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.agreement-checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #2874a6; /* Change checkbox color */
+}
+
+.agreement-checkbox-group label {
+    font-weight: 500;
+    color: #333;
+    font-size: 1.05em;
+    margin-bottom: 0; /* Reset margin-bottom for label in checkbox group */
+}
+
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #2874a6; /* A pleasant blue */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.4em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button:hover {
+    background-color: #1f5b80;
+    transform: translateY(-2px);
+}
+
+.submit-button:active {
+    background-color: #1a4c6e;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    .container {
+        padding: 25px;
+        border-radius: 8px;
+    }
+    h1 {
+        font-size: 2em;
+        margin-bottom: 30px;
+    }
+    h2 {
+        font-size: 1.5em;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+    .calendar-section iframe {
+        height: 400px;
+    }
+    .submit-button {
+        font-size: 1.2em;
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.3em;
+    }
+    .calendar-section iframe {
+        height: 300px;
+    }
+    .reservation-form input,
+    .reservation-form select {
+        font-size: 0.9em;
+        padding: 10px;
+    }
+    .agreement-content {
+        padding: 15px;
+    }
+    .agreement-content h3 {
+        font-size: 1.1em;
+    }
+    .agreement-checkbox-group label {
+        font-size: 0.95em;
+    }
+    .submit-button {
+        font-size: 1.1em;
+        padding: 10px 12px;
+    }
+}
