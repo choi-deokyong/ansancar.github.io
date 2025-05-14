@@ -13,8 +13,8 @@
         <section class="calendar-section">
             <h2>1. 구글 캘린더</h2>
             <p>현재 예약 상황을 확인해 보세요.</p>
-            <iframe src="https://calendar.google.com/calendar/embed?src=10263285edd19de93d9af3612d15a7c464b99f93d10f306e9a8576cbe181efe4@group.calendar.google.com&ctz=Asia%2FSeoul&mode=month" 
-                    style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            <iframe src="https://calendar.google.com/calendar/embed?src=10263285edd19de93d9af3612d15a7c464b99f93d10f306e9a8576cbe181efe4@group.calendar.google.com&ctz=Asia%2FSeoul&mode=month"
+                    style="border: 0" frameborder="0" scrolling="no"></iframe>
             <p>※ 캘린더는 실시간으로 업데이트되며, 스프레드시트의 '캘린더 동기화' 체크박스 활성화 후 반영됩니다.</p>
         </section>
 
@@ -98,11 +98,64 @@
                     <label for="agreement">위 내용을 확인하였으며, 이에 동의합니다.</label>
                 </div>
             </section>
-            
+
             <button type="submit" class="submit-button">신청하기</button>
+             <div id="message" class="message"></div>
         </form>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Apps Script 웹 앱 URL (고객님의 실제 URL로 교체 필요)
+        // 이 URL은 Apps Script 프로젝트에서 '배포' -> '배포 관리' -> 해당 웹 앱 배포 옆 연필 아이콘 -> 'URL'에서 확인 가능합니다.
+        const webAppUrl = 'https://script.google.com/macros/s/AKfycbzpyJY-sVvdfPw1rlM_-HhD0IPFKC9V8zh4JjGrj_dQa1WnLcmxjOvzLJAkKxU7ba7ba7pyg/exec'; // <-- 이 부분을 고객님의 실제 URL로 교체하세요!
+
+        document.getElementById('vehicleReservationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 기본 폼 제출 동작을 막습니다.
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            // 동의 여부 확인
+            if (!formData.get('agreement')) {
+                showMessage('신청 전 안내사항에 동의해주세요.', 'error');
+                return; // 폼 제출 중단
+            }
+
+             // 폼 데이터를 URLSearchParams 형식으로 변환
+            const urlEncodedData = new URLSearchParams(formData).toString();
+
+            fetch(webAppUrl, {
+                method: 'POST',
+                mode: 'no-cors', // CORS 오류 방지를 위해 추가 (응답 데이터를 읽을 수는 없음)
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: urlEncodedData
+            })
+            .then(response => {
+                // no-cors 모드에서는 응답 상태를 직접 확인할 수 없습니다.
+                // Apps Script에서 성공 메시지를 반환하도록 설정했으므로, 여기서는 무조건 성공으로 간주하고 메시지를 표시합니다.
+                // 실제 성공 여부는 Apps Script 실행 로그나 스프레드시트/캘린더를 통해 확인해야 합니다.
+                showMessage('예약 신청이 성공적으로 접수되었습니다!', 'success');
+                form.reset(); // 폼 초기화
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('예약 신청 중 오류가 발생했습니다. 다시 시도해주세요.', 'error');
+            });
+        });
+
+        // 메시지를 표시하는 함수
+        function showMessage(msg, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = msg;
+            messageDiv.className = 'message ' + type; // 클래스를 success 또는 error로 설정
+            messageDiv.style.display = 'block'; // 메시지 표시
+             // 5초 후에 메시지 숨기기 (선택 사항)
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000); // 5000ms = 5초
+        }
+    </script>
 </body>
 </html>
