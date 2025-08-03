@@ -1,13 +1,16 @@
 /* 캘린더 iframe 스타일 */
 .calendar-section iframe {
     width: 100%; /* 너비를 부모 요소에 맞춰 100%로 설정 */
-    height: 600px; /* PC 환경에서 적절한 높이 */
+    height: 100%; /* 높이도 부모 요소에 맞춰 100%로 설정 */
     border: 0;
-    max-width: 800px; /* PC 환경에서 너무 넓어지는 것을 방지 */
+    max-width: 800px; /* PC 환경에서 최대 너비 */
+    max-height: 600px; /* PC 환경에서 최대 높이 */
 }
 
 /* 캘린더 섹션에 가로 스크롤 허용 */
 .calendar-section {
+    /* 캘린더가 100% 높이를 갖도록, 부모 요소에 높이 설정 */
+    height: 600px; /* PC 환경에서의 높이 */
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     text-align: center;
@@ -87,10 +90,9 @@ h1, h2 {
     border: 1px solid #f5c6cb;
 }
 
-/* 모바일 미디어 쿼리 - 캘린더 높이만 조절 */
+/* 모바일 환경을 위한 미디어 쿼리 */
 @media (max-width: 768px) {
-    .calendar-section iframe {
-        height: 450px; /* 모바일에서 캘린더 높이 조정 */
-        width: 100%; /* 너비는 항상 100%로 유지 */
+    .calendar-section {
+        height: 450px; /* 모바일에서 캘린더 섹션의 높이 조정 */
     }
 }
