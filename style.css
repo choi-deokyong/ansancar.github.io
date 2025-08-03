@@ -17,7 +17,7 @@
 /* 모바일 환경을 위한 미디어 쿼리 */
 @media (max-width: 768px) {
     .calendar-section {
-        height: 450px; /* 모바일에서는 캘린더 섹션의 높이를 더 작게 조정 */
+        height: 768px; /* 모바일에서는 캘린더 섹션의 높이를 더 작게 조정 */
     }
 }
 
@@ -92,3 +92,4 @@ h1, h2 {
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
+
