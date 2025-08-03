@@ -1,20 +1,20 @@
-/* 캘린더 iframe 스타일 - 너비를 800px로 고정 */
+/* 캘린더 iframe 스타일 */
 .calendar-section iframe {
-    width: 800px; /* Fixed width as requested */
-    height: 600px; /* Fixed height */
-    border: 0; /* Remove default iframe border */
+    width: 100%; /* 너비를 부모 요소에 맞춰 100%로 설정 */
+    height: 600px; /* PC 환경에서 적절한 높이 */
+    border: 0;
+    max-width: 800px; /* PC 환경에서 너무 넓어지는 것을 방지 */
 }
 
 /* 캘린더 섹션에 가로 스크롤 허용 */
 .calendar-section {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
-    text-align: center; /* 캘린더 가운데 정렬 (선택 사항) */
-    margin-bottom: 20px; /* 캘린더 아래 간격 (선택 사항) */
+    -webkit-overflow-scrolling: touch;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 /* 나머지 요소들은 기본 브라우저 스타일이 적용됩니다. */
-/* 필요하다면 여기에 추가 스타일을 최소한으로 작성할 수 있습니다. */
 /* 예: .container, h1, h2, .form-group 등의 기본 레이아웃 스타일 */
 
 .container {
@@ -90,14 +90,7 @@ h1, h2 {
 /* 모바일 미디어 쿼리 - 캘린더 높이만 조절 */
 @media (max-width: 768px) {
     .calendar-section iframe {
-        height: 400px; /* Adjusted height for mobile */
-        /* 너비는 800px로 고정 유지 */
-    }
-}
-
-@media (max-width: 480px) {
-     .calendar-section iframe {
-        height: 300px; /* Further adjusted height for smaller mobile */
-        /* 너비는 800px로 고정 유지 */
+        height: 450px; /* 모바일에서 캘린더 높이 조정 */
+        width: 100%; /* 너비는 항상 100%로 유지 */
     }
 }
