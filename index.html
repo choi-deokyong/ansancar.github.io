@@ -1,376 +1,180 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>안산교회 차량예약시스템</title>
-
-    <style>
+<style>
+    .calendar-section {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto 20px auto;
+        height: 600px;
+    }
+    .calendar-section iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+    @media (max-width: 768px) {
         .calendar-section {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto 20px auto;
-            height: 600px;
+            height: 768px;
+            width: 768px;
         }
-        .calendar-section iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        @media (max-width: 768px) {
-            .calendar-section {
-                height: 768px;
-                width: 768px;
-            }
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1, h2 { 
-            text-align: center; 
-        }
-        .form-group { 
-            margin-bottom: 25px;
-        }
-        .form-group label { 
-            display: block; 
-            margin-bottom: 5px; 
-            font-weight: bold; 
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
+    }
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    h1, h2 { 
+        text-align: center; 
+    }
+    .form-group { 
+        margin-bottom: 25px;
+    }
+    .form-group label { 
+        display: block; 
+        margin-bottom: 5px; 
+        font-weight: bold; 
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
 
-        /* ✅ 모든 select 크기 확대 + 버튼 스타일 */
-        select {
-            height: 50px;
-            font-size: 1.2rem;
-            padding: 8px 12px;
-            box-sizing: border-box;
-            appearance: none; /* 기본 화살표 제거 */
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+    /* ✅ 모든 select 크기 확대 + 버튼 스타일 */
+    select {
+        height: 50px;
+        font-size: 1.2rem;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        appearance: none; /* 기본 화살표 제거 */
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
 
-        select:hover {
-            border-color: #007bff;
-            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
-        }
+    select:hover {
+        border-color: #007bff;
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    }
 
-        /* ✅ 날짜+시간 가로 정렬 */
+    /* ✅ 날짜+시간 가로 정렬 */
+    .datetime-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* ✅ 날짜 입력 필드 스타일 수정 (iOS 대응) */
+    .datetime-group input[type="date"] {
+        flex: 1;
+        min-width: 120px;
+        height: 50px; /* select와 동일한 높이로 설정 */
+        font-size: 1.2rem;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        border: 1px solid #ccc; /* select와 동일한 테두리 스타일 적용 */
+        border-radius: 8px; /* select와 동일한 모서리 둥글기 적용 */
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        /* iOS Safari 스타일 재정의 */
+        -webkit-appearance: none;
+    }
+
+    .datetime-group select {
+        flex: 1;
+        min-width: 120px;
+        height: 50px;
+        font-size: 1.2rem;
+        padding: 8px 12px;
+        box-sizing: border-box;
+    }
+
+    /* ✅ 파란색 날짜 라벨 */
+    .date-label {
+        color: #007bff;
+        font-weight: bold;
+        margin-right: 8px;
+        white-space: nowrap;
+    }
+
+    /* ✅ 모바일에서 세로 정렬 + 크기 증가 */
+    @media (max-width: 600px) {
         .datetime-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            width: 100%;
+            flex-direction: column;
+            gap: 5px;
         }
-
         .datetime-group input[type="date"],
-        .datetime-group select {
-            flex: 1;
-            min-width: 120px;
-            height: 50px;
-            font-size: 1.2rem;
-            padding: 8px 12px;
-            box-sizing: border-box;
+        .datetime-group select,
+        select {
+            height: 60px;
+            font-size: 1.4rem;
         }
+    }
 
-        /* ✅ 파란색 날짜 라벨 */
-        .date-label {
-            color: #007bff;
-            font-weight: bold;
-            margin-right: 8px;
-            white-space: nowrap;
-        }
+    .agreement-section {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-top: 20px;
+        background-color: #f9f9f9;
+    }
+    .agreement-content ul { 
+        margin-left: 20px; 
+    }
+    .agreement-checkbox-group {
+        margin-top: 15px;
+        text-align: center;
+    }
 
-        /* ✅ 모바일에서 세로 정렬 + 크기 증가 */
-        @media (max-width: 600px) {
-            .datetime-group {
-                flex-direction: column;
-                gap: 5px;
-            }
-            .datetime-group input[type="date"],
-            .datetime-group select,
-            select {
-                height: 60px;
-                font-size: 1.4rem;
-            }
-        }
+    .agreement-checkbox-group input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        cursor: pointer;
+    }
 
-        .agreement-section {
-            border: 1px solid #ccc;
-            padding: 15px;
-            margin-top: 20px;
-            background-color: #f9f9f9;
-        }
-        .agreement-content ul { 
-            margin-left: 20px; 
-        }
-        .agreement-checkbox-group {
-            margin-top: 15px;
-            text-align: center;
-        }
+    .submit-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #003366;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
 
-        .agreement-checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            vertical-align: middle;
-            cursor: pointer;
-        }
+    .submit-button:hover {
+        background-color: #002244;
+    }
 
-        .submit-button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-            background-color: #003366;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
+    .message {
+        margin-top: 20px;
+        padding: 12px;
+        border-radius: 5px;
+        font-size: 1.1em;
+        text-align: center;
+        display: none;
+    }
+    .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
 
-        .submit-button:hover {
-            background-color: #002244;
-        }
-
-        .message {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 5px;
-            font-size: 1.1em;
-            text-align: center;
-            display: none;
-        }
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .reservation-form h2 {
-            margin-bottom: 4em;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>안산교회 차량예약시스템</h1>
-
-        <section class="calendar-section">
-            <h2>1. 구글 캘린더</h2>
-            <p>현재 예약 상황을 확인해 보세요.</p>
-            <iframe src="https://calendar.google.com/calendar/embed?src=10263285edd19de93d9af3612d15a7c464b99f93d10f306e9a8576cbe181efe4@group.calendar.google.com&ctz=Asia%2FSeoul&mode=month" 
-    style="border: 0" frameborder="0" scrolling="no"></iframe>
-            <p>※ 캘린더는 실시간으로 업데이트되며, 스프레드시트의 '캘린더 동기화' 체크박스 활성화 후 반영됩니다.</p>
-        </section>
-
-        <form id="vehicleReservationForm" class="reservation-form">
-            <h2>차량 예약 신청</h2>
-
-            <div class="form-group">
-                <label for="applicantName">2. 신청자 성함</label>
-                <input type="text" id="applicantName" name="applicantName" required>
-            </div>
-
-            <div class="form-group">
-                <label>3. 출발 날짜와 시간</label>
-                <div class="datetime-group">
-                    <span class="date-label">날짜</span>
-                    <input type="date" id="departureDate" required>
-                    <select id="departureHour" required></select>
-                    <select id="departureMinute" required>
-                        <option value="00">00분</option>
-                        <option value="10">10분</option>
-                        <option value="20">20분</option>
-                        <option value="30">30분</option>
-                        <option value="40">40분</option>
-                        <option value="50">50분</option>
-                    </select>
-                </div>
-                <input type="hidden" id="departureDateTime" name="departureDateTime">
-            </div>
-
-            <div class="form-group">
-                <label>4. 도착 날짜와 시간</label>
-                <div class="datetime-group">
-                    <span class="date-label">날짜</span>
-                    <input type="date" id="arrivalDate" required>
-                    <select id="arrivalHour" required></select>
-                    <select id="arrivalMinute" required>
-                        <option value="00">00분</option>
-                        <option value="10">10분</option>
-                        <option value="20">20분</option>
-                        <option value="30">30분</option>
-                        <option value="40">40분</option>
-                        <option value="50">50분</option>
-                    </select>
-                </div>
-                <input type="hidden" id="arrivalDateTime" name="arrivalDateTime">
-            </div>
-
-            <div class="form-group">
-                <label for="numberOfPeople">5. 몇 명이 가시나요?</label>
-                <input type="text" id="numberOfPeople" name="numberOfPeople" required placeholder="예: 5명">
-            </div>
-
-            <div class="form-group">
-                <label for="destination">6. 어디로 가시나요?</label>
-                <input type="text" id="destination" name="destination" required>
-            </div>
-
-            <div class="form-group">
-                <label for="numberOfVans">7. 승합차 몇 대가 필요하신가요?</label>
-                <select id="numberOfVans" name="numberOfVans" required>
-                    <option value="">선택하세요</option>
-                    <option value="0대">0대</option>
-                    <option value="1대">1대</option>
-                    <option value="2대">2대</option>
-                    <option value="3대">3대</option>
-                    <option value="4대">4대</option>
-                    <option value="5대">5대</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="busNeeded">8. 버스가 필요하실까요?</label>
-                <select id="busNeeded" name="busNeeded" required>
-                    <option value="">선택하세요</option>
-                    <option value="아니요">아니요</option>
-                    <option value="1대">1대</option>
-                    <option value="2대">2대</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="purpose">9. 용도가 어떻게 되시나요? 예) 시선부 수련회</label>
-                <input type="text" id="purpose" name="purpose" required>
-            </div>
-
-            <section class="agreement-section">
-                <h2>안내사항 및 동의</h2>
-                <div class="agreement-content">
-                    <p>교회 승합차 예약 및 배차에 대해 안내해 드리겠습니다.<br>교회 차량은 사용 용도에 따라 <strong>교회지원</strong>과 <strong>사용자 부담</strong>으로 구분합니다.</p>
-                        <p class="pl-4">
-                            <strong>교회지원</strong><br>
-                            회/부서/교구/구역에서 봉사와 교회 공식일정을 위한 목적으로 차량 이용 시<br>
-                            차량 유류비, 고속도로 톨게이트 비용 교회에서 지원
-                        </p>
-                        <p class="pl-4">
-                            <strong>사용자부담</strong><br>
-                            회/부서/교구/구역에서 교회 비공식일정을 위한 목적으로 차량 이용 시<br>
-                            차량 유류비, 고속도로 톨게이트 비용 사용자 부담
-                        </p>
-                        <p class="pl-4 text-sm text-gray-500">
-                            ※ 교회 공식일정: 년간/월간 계획 및 교회 소식지에 광고된 교회의 각종 행사나 모임을 말함
-                        </p>
-                        <p>
-                            차량 매뉴얼에 의해 교회 공식일정 및 우선순위에 따라 예약 및 배차가 변경될 경우 바로 연락드리도록 하겠습니다.
-                        </p>
-                        <p>
-                            교회차량관리자 신현구형제 (010-7345-2253)<br>
-                            차량배정담당자 (정)윤종식 집사 (010-7172-9401)<br>
-                            (부)최상돈 집사 (010-4569-0691)
-                    <p>해당사항 확인하신 후 아래 체크박스에 체크하고 제출 버튼을 눌러주시면 신청이 접수됩니다.</p>
-                </div>
-                <div class="form-group agreement-checkbox-group">
-                    <input type="checkbox" id="agreement" name="agreement" required>
-                    <label for="agreement">위 내용을 확인하였으며, 이에 동의합니다.</label>
-                </div>
-            </section>
-            
-            <div class="button-wrapper" style="display: flex; align-items: center; gap: 10px;">
-                <button type="submit" class="submit-button">신청하기 (누르신 후 10초만 대기해주세요 ! )</button>
-            </div>
-        </form>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('vehicleReservationForm');
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycbyg7IXdiIqTrnr1qPCys5kOaf-GvSztcerl-D3IWTiVBipclr0b1_SA2D21nPZgXQs1/exec';
-
-            const departureHourSelect = document.getElementById('departureHour');
-            const arrivalHourSelect = document.getElementById('arrivalHour');
-
-            for (let i = 0; i < 24; i++) {
-                const hour = i.toString().padStart(2, '0');
-                const option1 = new Option(`${hour}시`, hour);
-                const option2 = new Option(`${hour}시`, hour);
-                departureHourSelect.add(option1);
-                arrivalHourSelect.add(option2);
-            }
-
-            form.addEventListener('submit', async function (event) {
-                event.preventDefault();
-
-                const departureDate = document.getElementById('departureDate').value;
-                const departureHour = document.getElementById('departureHour').value;
-                const departureMinute = document.getElementById('departureMinute').value;
-
-                const arrivalDate = document.getElementById('arrivalDate').value;
-                const arrivalHour = document.getElementById('arrivalHour').value;
-                const arrivalMinute = document.getElementById('arrivalMinute').value;
-
-                document.getElementById('departureDateTime').value = `${departureDate}T${departureHour}:${departureMinute}`;
-                document.getElementById('arrivalDateTime').value = `${arrivalDate}T${arrivalHour}:${arrivalMinute}`;
-
-                const formData = new FormData(form);
-                const data = {};
-                for (let [key, value] of formData.entries()) {
-                    data[key] = value;
-                }
-
-                if (!data.agreement) {
-                    alert('안내사항에 동의해야 신청할 수 있습니다.');
-                    return;
-                }
-
-                delete data.agreement;
-
-                try {
-                    const response = await fetch(webAppUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams(data).toString()
-                    });
-
-                    if (response.ok) {
-                        const result = await response.json();
-                        if (result.status === 'success') {
-                            alert('예약 신청이 성공적으로 접수되었습니다!');
-                            form.reset();
-                        } else {
-                            alert('예약 신청 중 오류가 발생했습니다: ' + result.message);
-                        }
-                    } else {
-                        alert('서버 통신 중 오류가 발생했습니다. 응답 코드: ' + response.status);
-                    }
-                } catch (error) {
-                    console.error('Error submitting form:', error);
-                    alert('네트워크 오류 또는 서버와의 통신 문제로 신청에 실패했습니다.');
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+    .reservation-form h2 {
+        margin-bottom: 4em;
+    }
+</style>
